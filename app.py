@@ -1,6 +1,15 @@
 ###TEST FLASK###
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, send_file, url_for
+import datetime
+from ollama import Client
+import os
+import secrets
+import logging
+import black
+import sys
+import io
+
 
 app = Flask(__name__)
 
@@ -30,3 +39,9 @@ def receive_json():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+'''
+    Ollama and docker connections not included yet
+    Need to sort out the Json string sent from the webpage
+'''
