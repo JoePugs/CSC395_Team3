@@ -1,0 +1,12 @@
+version: '3.8'  # Specify the version of the Docker Compose file format
+
+services:
+  web:
+    build:
+      context: .  # Use the Dockerfile in the current directory
+    ports:
+      - "5000:5000"  # Map port 5000 on the host to port 5000 in the container
+    environment:
+      - OLLAMA_API_URL=https://api.ollama.com/your-endpoint  # Replace with your Ollama endpoint
+      - OLLAMA_API_KEY=your-api-key  # Replace with your Ollama API key
+
