@@ -7,6 +7,8 @@ services:
     ports:
       - "5000:5000"  # Map port 5000 on the host to port 5000 in the container
     environment:
+      
       - OLLAMA_API_URL=https://api.ollama.com/your-endpoint  # Replace with your Ollama endpoint
-      - OLLAMA_API_KEY=your-api-key  # Replace with your Ollama API key
-
+      - OLLAMA_API_KEY=your-api-key  # Replace with your Ollama API key (if required)
+    volumes:
+      - .:/usr/src/app  # Optional: Bind mount to allow live code changes without rebuilding
