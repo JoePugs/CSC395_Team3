@@ -16,5 +16,11 @@ COPY . .
 # Expose port 5000 to the outside world (for Flask)
 EXPOSE 5000
 
+# Set environment variables for Flask
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
+
+
 # Run the Flask app (assuming the entry point is app.py)
 CMD [ "python", "./app.py" ]
