@@ -14,32 +14,46 @@ def receive_json():
         # Parse the incoming JSON data
         data = request.get_json()
 
-        # Process the JSON data (e.g., print it)
+        # Log the received data (optional)
         print(f"Received JSON data: {data}")
 
-        # Example: Send the JSON data to Ollama API as a prompt
-        ollama_response = requests.post(
-            f"{OLLAMA_API_URL}/chat",
-            json={"prompt": data.get('prompt', '')}  # Assume 'prompt' is a key in the incoming JSON
-        )
+        try:
+            # Send the JSON data (prompt) to Ollama API
+            ollama_response = requests.post(
+                f"{OLLAMA_API_URL}/chat",
+                json={"prompt": data.get('prompt', '')}  # Assume 'prompt' is a key in the incoming JSON
+            )
 
-        # Get Ollama's response
-        ollama_response_data = ollama_response.json()
-        model_output = ollama_response_data.get("response", "No response from model")
+            # Check if the request to Ollama was successful
+            if ollama_response.status_code == 200:
+                ollama_response_data = ollama_response.json()
+                model_output = ollama_response_data.get("response", "No response from model")
 
-        # Create a response dictionary
-        response = {
-            "status": "success",
-            "message": "JSON received and processed",
-            "data": data,  # Echo the received JSON back
-            "model_output": model_output  # Include Ollama's response
-        }
+                # Create a response dictionary to send back to the client
+                response = {
+                    "status": "success",
+                    "message": "JSON received and processed",
+                    "data": data,  # Echo the received JSON back
+                    "model_output": model_output  # Include Ollama's response
+                }
+            else:
+                # If Ollama API request failed, log the error and return the failure response
+                response = {
+                    "status": "error",
+                    "message": "Failed to connect to Ollama API",
+                    "details": ollama_response.text
+                }
 
-        # Return a JSON response
-        return jsonify(response), 200
+            # Return the JSON response
+            return jsonify(response), 200
+
+        except Exception as e:
+            # Catch any errors during the request and return an error response
+            return jsonify({"status": "error", "message": str(e)}), 500
     else:
         # If the request does not contain JSON, return an error
         return jsonify({"status": "error", "message": "Request must be JSON"}), 400
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
