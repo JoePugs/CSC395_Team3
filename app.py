@@ -1,10 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
+import os
 import requests
 
 app = Flask(__name__)
 
 # Ollama API URL
 OLLAMA_API_URL = "http://localhost:11434/api"
+
+# Define a route to serve the index.html file from the same directory as app.py
+@app.route('/')
+def serve_index():
+    # Get the current directory
+    directory = os.path.dirname(os.path.abspath(__file__))
+    # Send index.html from the same directory
+    return send_from_directory(directory, 'index.html')
+
 
 # Define a route that accepts POST requests and handles JSON data
 @app.route('/json', methods=['POST'])

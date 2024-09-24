@@ -25,6 +25,6 @@ services:
     networks:
       - ollama-network
 
-  networks:
-    ollama-network:
-      driver: bridge
+networks:
+  ollama-network:
+    driver: bridge
