@@ -12,3 +12,6 @@ services:
       - OLLAMA_API_KEY=your-api-key  # Replace with your Ollama API key (if required)
     volumes:
       - .:/usr/src/app  # Optional: Bind mount to allow live code changes without rebuilding
+
+networks:
+  ollama-network:
