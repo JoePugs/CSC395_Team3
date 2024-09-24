@@ -24,3 +24,7 @@ services:
     command: ["serve"]
     networks:
       - ollama-network
+
+  networks:
+    ollama-network:
+      driver: bridge
