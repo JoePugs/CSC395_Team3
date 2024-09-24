@@ -1,17 +1,26 @@
 version: '3.8'  # Specify the version of the Docker Compose file format
 
 services:
-  web:
+  flask-app:
     build:
       context: .  # Use the Dockerfile in the current directory
     ports:
       - "5000:5000"  # Map port 5000 on the host to port 5000 in the container
+    depends_on:
+    - ollama
     environment:
-      
-      - OLLAMA_API_URL=https://api.ollama.com/your-endpoint  # Replace with your Ollama endpoint
-      - OLLAMA_API_KEY=your-api-key  # Replace with your Ollama API key (if required)
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - OLLAMA_API_URL=http://localhost:11434/api  # Replace with your Ollama endpoint
     volumes:
       - .:/usr/src/app  # Optional: Bind mount to allow live code changes without rebuilding
+    networks:
+      - ollama-network
 
-networks:
-  ollama-network:
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    command: ["serve"]
+    networks:
+      - ollama-network
