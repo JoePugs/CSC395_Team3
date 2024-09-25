@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
 import requests
+from ollama import Client
 
 app = Flask(__name__)
 
@@ -70,3 +71,7 @@ def receive_json():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+    # to build 
+    # docker build -t csc395_team3-flask-app
+    # docker-compose up
