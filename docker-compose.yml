@@ -20,7 +20,7 @@ services:
   ollama:
     image: ollama/ollama
     ports:
-      - "11434:11434"
+      - "11435:11434"
     command: ["serve"]
     networks:
       - ollama-network
