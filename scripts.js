@@ -34,7 +34,8 @@ function sendPrompt(){
         return;
     }
 
-    const prompt = "Make me an easy recipe using ${ingredients.join', ')} and items from ${selectedBrand}.";
+    const prompt = `Make me an easy recipe using ${ingredients.join(', ')} and items from ${selectedBrand}.`;
+
     const data = {
         prompt: prompt
     };
