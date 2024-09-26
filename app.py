@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 import os
 import requests
 from ollama import Client
@@ -14,10 +14,7 @@ OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://ollama:11434/api")
 # Define a route to serve the index.html file from the same directory as app.py
 @app.route('/')
 def serve_index():
-    # Get the current directory
-    directory = os.path.dirname(os.path.abspath(__file__))
-    # Send index.html from the same directory
-    return send_from_directory(directory, 'index.html')
+return render_template('index.html')
 
 
 # Define a route that accepts POST requests and handles JSON data
