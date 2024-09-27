@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recipe Creator</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Ingredient Input Section -->
+        <section class="input-section">
+            
+            <!-- send json to flask server. no function yet. borrowing css from ingredient button -->
+            <button type="button" id="send-json">Get Recipe</button>
+
+            <h2>Select a Brand</h2>
+            <form id="brand-form">
+                <label for="brand-select">Choose a brand:</label>
+                <select id="brand-select">
+                    <option value="">--Select a Brand--</option> <!-- Default empty option -->
+                    <option value="brand1">Tyson</option>
+                    <option value="brand2">Kraft</option>
+                    <option value="brand3">General Mills</option>
+                    <option value="brand4">Nabisco</option>
+                    <option value="brand5">Nestle</option>
+                    <option value="brand6">PepsiCo</option>
+                    <option value="brand7">Unilever</option>
+                    <option value="brand8">Kelloggs</option>
+                    <option value="brand9">Mars Inc</option>
+                    <option value="brand10">Coca Cola</option>
+                    <option value="brand11">Danone</option>
+                    <option value="brand12">Mondelez</option>
+                </select>
+            </form>
+
+            <h2>Enter Ingredients</h2>
+            <form id="ingredient-form">
+                <label for="ingredient">Add an Ingredient:</label>
+                <input type="text" id="ingredient">
+                <button type="button" id="add-ingredient">Add</button>
+            </form>
+<!-- ingredient box -->
+            <div class="ingredient-box">
+                <h3>Saved Ingredients</h3>
+                <ul id="ingredient-list">
+                
+                </ul>
+            </div>
+        </section>
+        
+<!-- recipe output -->
+        <section class="output-section">
+            <h2>Recipe</h2>
+            <p>output from ollama here</p>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script> defer></script>
+</body>
+</html>

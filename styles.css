@@ -7,7 +7,7 @@
 .input-section {
     flex: 1;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: #d32323;
 }
 
 /* Right side */
@@ -29,12 +29,12 @@ input {
 }
 
 button {
-    margin-left: 125px;
-    width: 445px;   /*length*/
-    padding: 10px 20px; /*Thickness*/
+    margin-left: 0px;
+    width: 70%;   /*length*/
+    padding: 10px; /*Thickness*/
     background-color: #ffffff;
     color: black;
-    border: 2px solid black;
+    border: 1px solid black;
     cursor: pointer;
 }
 
