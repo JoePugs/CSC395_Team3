@@ -24,44 +24,18 @@ document.getElementById('add-ingredient').addEventListener('click', function() {
     }
 });
 
-// Make prompt & send to server
-//function sendPrompt() {
-    // Check if ingredients and selectedBrand are present
-    //if (ingredients.length === 0 || !selectedBrand) {
-        //alert('You need to add ingredients and select a brand of products to use');
-        //return;
-    //}
-
-    // Correctly format the prompt string
-  //  const prompt = `Make me an easy recipe using turkey`;
-    //const data = {
-      //  prompt: prompt
-    //};
-
-    // Send data to the server
-    //fetch('http://localhost:5000/process', {
-      //  method: 'POST',
-        //headers: {
-          //  'Content-Type': 'application/json',
-       // },
-        // body: JSON.stringify(data),
-    // })
-    // .then(response => response.json())
-    //.then(result => {
-      //  console.log('Success:', result);
-    //})
-   // .catch(error => {
-     //   console.error('Error:', error);
-    //});
-//}
-
 function sendPrompt() {
+//    const formData = {
+//      ingredients: document.getElementById("ingredients").value,
+//      brand: document.getElementById("brand").value,
+//    };
+
     const formData = {
-      ingredients: document.getElementById("ingredients").value,
-      brand: document.getElementById("brand").value,
+      ingredients: "Turkey",
+      brand: "Kraft",
     };
   
-    fetch('http://localhost:5000/process', {
+    fetch('http://localhost:5002/process', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

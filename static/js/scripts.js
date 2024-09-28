@@ -56,9 +56,14 @@ document.getElementById('add-ingredient').addEventListener('click', function() {
 //}
 
 function sendPrompt() {
+//    const formData = {
+//      ingredients: document.getElementById("ingredients").value,
+//      brand: document.getElementById("brand").value,
+//    };
+
     const formData = {
-      ingredients: document.getElementById("ingredients").value,
-      brand: document.getElementById("brand").value,
+      ingredients: "turkey",
+      brand: "kraft",
     };
   
     fetch('http://localhost:5000/process', {
