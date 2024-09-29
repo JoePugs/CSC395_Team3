@@ -4,6 +4,7 @@ from ollama import Client
 import os
 import importlib
 import secrets
+from flask_cors import CORS
 import logging
 import sys
 import io
@@ -35,13 +36,20 @@ logger.addHandler(file_handler)
 #    console_handler.setLevel(logging.CRITICAL)
 app = Flask(__name__)
 
+CORS(app)
+
 
 initial_context = '''
 You are an expert chef!  Given the ingredients and name brand, you make a recipe that works!
 '''
+def getRecipe(context, ingredients, brand):
+    # Your logic to call Ollama or generate a recipe
+    ollama_reply = generate_ollama_response(context, ingredients)
+    response_data = {'success': True, 'ollama_reply': ollama_reply, 'reply': ollama_reply}
+    return response_data
 
 def generate_ollama_response(content,question):
-    client = Client(host='http://host.docker.internal:11434')
+    client = Client(host='http://localhost:11434')
     stream = client.chat(model='codellama', messages=[
     {"role": "system", "content": content},
     {"role": "user", "content": question}
@@ -63,11 +71,17 @@ def serve_index():
     return render_template('index.html')
 
 # Define a route that accepts POST requests and handles JSON data
-@app.route('/process', methods=['OPTIONS', 'POST'])
+@app.route('/process', methods=['POST'])
 def process():
     try:
         logger.info('Accessing json message')
+        
+        # Initialize ollama_reply to None to avoid NameError in case of exceptions
+        ollama_reply = None
+        
+        # Get JSON data from the request
         data = request.get_json()
+        
         ingredients = data['ingredients']
         brand = data['brand']
         logger.info('Json message processed')
@@ -76,8 +90,10 @@ def process():
         logger.info(f"Ingredients: {ingredients}")
         logger.info(f"Brand: {brand}")
 
+        # Call the getRecipe function
         logger.info("About to call getRecipe")
         response_data = getRecipe(initial_context, ingredients, brand)
+        
         if response_data['success']:
             logger.info("We have a successful compilation and execution!")
             logger.info("Here is the answer")
@@ -86,38 +102,23 @@ def process():
             logger.info("One shot to correct the failing code:")
             logger.info(response_data['ollama_reply'])
             logger.info(response_data)
-        print("Counting finished.")
+        
+        # Return the response data as JSON
         return jsonify(response_data)
-    except Exception as e:
-        logger.info("An exception has occurred")
-        tb = e.__traceback__
-        file_name, line_number = tb.tb_frame.f_code.co_filename, tb.tb_lineno
-        logger.info(f"\tError occurred in: {file_name} at line {line_number}")
-        error_message = str(e)
-        logger.info(error_message)
-        response_data = {'success': False, 'error': error_message, 'ollama_reply': ollama_reply}
-        return jsonify(response_data), 500 
-
-def getRecipe(context, ingredients, brand):
-    logger.info("First line of callNewlyGeneratedCode")
-    try:
-        # Perform some logic or validation here based on your use case
-        ollama_reply = generate_ollama_response(context, ingredients)
-        logger.info(ollama_reply)
-        response_data = {'success': True, 'ollama_reply': ollama_reply, 'reply': reply}
-        return response_data
-    except Exception as e:
-        logger.info("An exception has occurred")
-        tb = e.__traceback__
-        file_name, line_number = tb.tb_frame.f_code.co_filename, tb.tb_lineno
-        logger.info(f"\tError occurred in: {file_name} at line {line_number}")
-        error_message = str(e)
-        logger.info(error_message)
-        response_data = {'success': False, 'error': error_message, 'ollama_reply': ollama_reply}
-        #return jsonify(response_data), 500
-        return response_data
     
-
+    except Exception as e:
+        logger.info("An exception has occurred")
+        tb = e.__traceback__
+        file_name, line_number = tb.tb_frame.f_code.co_filename, tb.tb_lineno
+        logger.info(f"\tError occurred in: {file_name} at line {line_number}")
+        
+        # Log and return the error message
+        error_message = str(e)
+        logger.info(error_message)
+        
+        # Ensure ollama_reply is always defined
+        response_data = {'success': False, 'error': error_message, 'ollama_reply': ollama_reply or "No reply"}
+        return jsonify(response_data), 500
 @app.route('/status')
 def status():
     print("Fielded a status request")
