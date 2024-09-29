@@ -1,29 +1,27 @@
 import unittest
-from unittest.mock import patch, MagicMock
-from flask import json
-from app import app  # Assuming your Flask app is in a file named my_flask_app.py
+from unittest.mock import patch
+from app import app  # Adjust the import if your app file is named differently
 
 class FlaskServiceTest(unittest.TestCase):
-    
-    @patch('app.submit')  # Mock the submit function (endpoint handler)
-    def test_post_request(self, mock_submit):
-        # Initialize test client from Flask app
-        with app.test_client() as client:
-            # Set up mock response data
-            mock_response = {'status': 'success', 'data': {'key': 'value'}}
-            mock_submit.return_value = MagicMock(status_code=201, json=mock_response)
 
-            # Simulate a POST request
-            response = client.post('/submit', 
-                                   data=json.dumps({'key': 'value'}), 
-                                   content_type='application/json')
-            
-            # Check that the POST request was successful
-            self.assertEqual(response.status_code, 201)
-            self.assertEqual(response.json, mock_response)
+    def setUp(self):
+        # Set up the Flask test client
+        self.app = app.test_client()
+        self.app.testing = True
 
-            # Assert that the mock_submit function was called correctly
-            mock_submit.assert_called_once()
+    @patch('app.getRecipe')  # Mock the getRecipe function
+    def test_post_request(self, mock_getRecipe):
+        # Define what the mock should return
+        mock_getRecipe.return_value = {'success': True, 'reply': 'Sample Reply'}
+
+        # Make a POST request to the /process route
+        response = self.app.post('/process', json={'ingredients': ['tomato'], 'brand': 'Heinz'})
+
+        # Check that the response is as expected
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Sample Reply', response.data)  # Check if 'Sample Reply' is in the response data
+
+    # Add more test methods as needed...
 
 if __name__ == '__main__':
     unittest.main()
