@@ -5,7 +5,7 @@ from app import app  # Assuming your Flask app is in a file named my_flask_app.p
 
 class FlaskServiceTest(unittest.TestCase):
     
-    @patch('my_flask_app.submit')  # Mock the submit function (endpoint handler)
+    @patch('app.submit')  # Mock the submit function (endpoint handler)
     def test_post_request(self, mock_submit):
         # Initialize test client from Flask app
         with app.test_client() as client:
