@@ -12,7 +12,7 @@
         <section class="input-section">
             
             <!-- send json to flask server. no function yet. borrowing css from ingredient button -->
-            <button type="button" id="send-json">Get Recipe</button>
+            <button type="button" onclick="sendPrompt()" id="send-json">Get Recipe</button>
 
             <h2>Select a Brand</h2>
             <form id="brand-form">
@@ -53,6 +53,13 @@
         <section class="output-section">
             <h2>Recipe</h2>
             <p>output from ollama here</p>
+            <div class="reply-section">
+                <label for="reply_code">Reply Code:</label>
+                <textarea id="reply_code" readonly></textarea> <!-- For ollama_reply -->
+                
+                <label for="reply_answer">Reply Answer:</label>
+                <textarea id="reply_answer" readonly></textarea> <!-- For the final reply -->
+            </div>
         </section>
     </div>
 
