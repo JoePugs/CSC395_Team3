@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from flask import json
-from my_flask_app import app  # Assuming your Flask app is in a file named my_flask_app.py
+from app import app  # Assuming your Flask app is in a file named my_flask_app.py
 
 class FlaskServiceTest(unittest.TestCase):
     
