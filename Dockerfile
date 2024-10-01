@@ -9,6 +9,7 @@ COPY requirements.txt ./
 
 # Install any dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+# Do not need to add flask_cors pip install because the Demo is occurring on our machine of choice; not relying on remote deployment
 
 # Copy the rest of the application code to the container
 COPY . .
