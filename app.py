@@ -10,6 +10,7 @@ import sys
 import io
 import black
 #Start
+#running twice?
 # Create a custom logger
 logger = logging.getLogger(__name__)
 
