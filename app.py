@@ -76,13 +76,15 @@ def serve_index():
 def process():
     try:
         logger.info('Accessing json message')
-        
+
         # Initialize ollama_reply to None to avoid NameError in case of exceptions
         ollama_reply = None
-        
-        # Get JSON data from the request
-        data = request.get_json()
-        
+
+        # Get JSON data from the request (silent=True prevents raising an exception)
+        data = request.get_json(silent=True)
+        if data is None:
+            raise ValueError("Malformed JSON")  # Explicitly raise an error if parsing fails
+
         ingredients = data['ingredients']
         brand = data['brand']
         logger.info('Json message processed')
@@ -94,32 +96,25 @@ def process():
         # Call the getRecipe function
         logger.info("About to call getRecipe")
         response_data = getRecipe(initial_context, ingredients, brand)
-        
+
         if response_data['success']:
             logger.info("We have a successful compilation and execution!")
             logger.info("Here is the answer")
             logger.info(response_data['reply'])
+            return jsonify(response_data), 200
         else:
             logger.info("One shot to correct the failing code:")
             logger.info(response_data['ollama_reply'])
             logger.info(response_data)
-        
-        # Return the response data as JSON
-        return jsonify(response_data)
-    
+            return jsonify(response_data), 500
+
+    except ValueError as ve:
+        logger.error("Malformed JSON received: %s", str(ve))
+        return jsonify({'success': False, 'error': 'Malformed JSON'}), 400  # Return 400 Bad Request
+
     except Exception as e:
-        logger.info("An exception has occurred")
-        tb = e.__traceback__
-        file_name, line_number = tb.tb_frame.f_code.co_filename, tb.tb_lineno
-        logger.info(f"\tError occurred in: {file_name} at line {line_number}")
-        
-        # Log and return the error message
-        error_message = str(e)
-        logger.info(error_message)
-        
-        # Ensure ollama_reply is always defined
-        response_data = {'success': False, 'error': error_message, 'ollama_reply': ollama_reply or "No reply"}
-        return jsonify(response_data), 500
+        logger.error("An exception occurred: %s", str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
 @app.route('/status')
 def status():
     print("Fielded a status request")
