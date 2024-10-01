@@ -40,11 +40,12 @@ CORS(app)
 
 
 initial_context = '''
-You are an expert chef!  Given the ingredients and name brand, you make a recipe that works!
+You are an expert chef!  Given the ingredients and brand given, you make a recipe that works! You MUST include a product from the brand to you along with the ingredients!
 '''
 def getRecipe(context, ingredients, brand):
     # Your logic to call Ollama or generate a recipe
-    ollama_reply = generate_ollama_response(context, ingredients)
+    question = f"Ingredients: {ingredients}. Brand: {brand}."
+    ollama_reply = generate_ollama_response(context, question)
     response_data = {'success': True, 'ollama_reply': ollama_reply, 'reply': ollama_reply}
     return response_data
 
