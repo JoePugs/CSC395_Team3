@@ -39,6 +39,7 @@ app = Flask(__name__)
 CORS(app)
 
 
+
 initial_context = '''
 You are an expert chef!  Given the ingredients and brand given, you make a recipe that works! You MUST include a product from the brand to you along with the ingredients!
 '''
@@ -50,7 +51,7 @@ def getRecipe(context, ingredients, brand):
     return response_data
 
 def generate_ollama_response(content,question):
-    client = Client(host='http://localhost:11434')
+    client = Client(host='http://localhost:11434')   # Port matches the docker-compose file. Verifying Flask and Ollama are operating on same port. 
     stream = client.chat(model='codellama', messages=[
     {"role": "system", "content": content},
     {"role": "user", "content": question}

@@ -11,7 +11,7 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      - OLLAMA_API_URL=http://localhost:11434/api  # Replace with your Ollama endpoint
+      - OLLAMA_API_URL=http://localhost:11434/api  # Making sure this is the endpoint to connect Flask with Ollama API
     volumes:
       - .:/usr/src/app  # Optional: Bind mount to allow live code changes without rebuilding
     networks:
