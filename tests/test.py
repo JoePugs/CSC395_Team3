@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598
 import unittest
 from unittest.mock import patch
 from app import app  # Ensure your Flask app is correctly imported
@@ -44,8 +41,6 @@ class FlaskServiceTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-<<<<<<< HEAD
-=======
 
 
 
@@ -107,4 +102,3 @@ class FlaskServiceTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()'''
->>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598

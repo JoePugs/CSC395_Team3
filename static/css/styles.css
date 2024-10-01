@@ -75,4 +75,15 @@ select {
     border-bottom: 1px solid #ddd;
 }
 
+<<<<<<< HEAD
 
+=======
+#reply_answer {
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+    box-sizing: border-box;  /* Ensure padding is included in the width */
+    min-height: 100px;  /* Ensure some initial height */
+    resize: none;  /* Disable manual resizing */
+}
+>>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598

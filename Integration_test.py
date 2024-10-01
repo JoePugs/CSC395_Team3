@@ -2,7 +2,11 @@ import unittest
 import json
 from unittest.mock import patch
 from flask import Flask
+<<<<<<< HEAD
 from app import app, initial_context  # Ensure your Flask app is correctly imported
+=======
+from app import app  # Ensure your Flask app is correctly imported
+>>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598
 
 class TestIntegration(unittest.TestCase):
     def setUp(self):
@@ -14,8 +18,12 @@ class TestIntegration(unittest.TestCase):
         # Define the mock return value of the Ollama API response
         mock_getRecipe.return_value = {
             'success': True,
+<<<<<<< HEAD
             'ollama_reply': 'Here is a delicious recipe for chocolate cake.',
             'reply': 'Here is a delicious recipe for chocolate cake.'
+=======
+            'ollama_reply': 'Here is a delicious recipe for chocolate cake.'
+>>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598
         }
 
         # URL of the Flask server endpoint
@@ -44,7 +52,16 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(response_data['ollama_reply'], 'Here is a delicious recipe for chocolate cake.', "Expected response to match the mocked Ollama reply")
 
         # Ensure that the getRecipe function was called with the expected parameters
+<<<<<<< HEAD
         mock_getRecipe.assert_called_once_with(initial_context, payload['ingredients'], payload['brand'])
 
 if __name__ == '__main__':
     unittest.main()
+=======
+        mock_getRecipe.assert_called_once_with(app.initial_context, payload['ingredients'], payload['brand'])
+
+if __name__ == '__main__':
+    unittest.main()
+#Everything passes for the integration test
+# All functions work on their own
+>>>>>>> 93e588febbaa72fcfd2eb866aec6e845dbe32598
