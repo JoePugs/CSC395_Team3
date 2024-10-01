@@ -31,7 +31,7 @@ function sendPrompt() {
 //    };
 
     const formData = {
-      ingredients: "Turkey",
+      ingredients: "Steak",
       brand: "Kraft",
     };
   

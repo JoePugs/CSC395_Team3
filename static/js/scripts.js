@@ -54,16 +54,27 @@ document.getElementById('add-ingredient').addEventListener('click', function() {
      //   console.error('Error:', error);
     //});
 //}
+function autoResizeTextarea() {
+    const textarea = document.getElementById("reply_code");
+    textarea.style.height = "auto";  // Reset height
+    textarea.style.height = textarea.scrollHeight + "px";  // Adjust height to fit content
+}
 
+// Update UI with the response and auto-resize
+function updateReply(data) {
+    const replyTextarea = document.getElementById("reply_code");
+    replyTextarea.value = data.reply;
+    autoResizeTextarea();  // Call the auto-resize function after setting content
+}
 function sendPrompt() {
 //    const formData = {
 //      ingredients: document.getElementById("ingredients").value,
 //      brand: document.getElementById("brand").value,
 //    };
-
+    const ingredientsString = ingredients.join(", ");
     const formData = {
-      ingredients: "turkey",
-      brand: "kraft",
+      ingredients: ingredientsString,
+      brand: selectedBrand,
     };
   
     fetch('http://localhost:5000/process', {
