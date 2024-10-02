@@ -43,7 +43,10 @@ The Ollama container was initially using the LLM called ```codellama``` which wa
 
 ### Application Use ###
 The docker-compose.yml file utilizes port 5000 on your local machine in order for the web browser to connect with the Flask server. The diagram below maps out the system's architecture:  
-![Screenshot](./images/Screenshot 2024-10-01 222146.png)  
+
+![Screenshot]("./images/Screenshot 2024-10-01 222146.png")
+
+
 
 
 
