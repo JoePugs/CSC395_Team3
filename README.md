@@ -46,7 +46,7 @@ The docker-compose.yml file utilizes port 5000 on your local machine in order fo
 ![Screenshot of the application interface](images/Screenshot.png)  
 
 Below is another diagram of the system but using snippets of the system's code (including the UI) within the repository:  
-![Screenshot of the application interface](images/Screenshot2.png)  
+![Screenshot of the application interface](images/unnamed.png)  
 
 
 ### Steps to Run the UI Application: ###  
